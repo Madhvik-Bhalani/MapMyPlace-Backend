@@ -91,3 +91,36 @@ exports.resetPassword = async (req, res) => {
 
 };
 
+
+// 4.change password
+exports.changePassword = async (req, res) => {
+    try {
+        data = await userModel.findOne({ _id: req.user._id })
+
+        valid = await bcrypt.compare(req.body.opass, data.pass)
+        if (valid) {
+            if (req.body.npass === req.body.rpass) {
+                newpass = await bcrypt.hash(req.body.npass, 10)
+                udata = await userModel.updateOne({ email: data.email }, { $set: { pass: newpass } })
+                res.status(200).json({
+                    status: true,
+                    message: "Your password has been changed..!!",
+                });;
+            }
+            else {
+                res.status(400).json({
+                    status: false,
+                    message: "New password and re-type password are not match",
+                });;
+            }
+        } else {
+            res.status(400).json({
+                status: false,
+                message: "Old password does not match",
+            });;
+        }
+    } catch (e) {
+        res.status(400).json(e.message)
+
+    }
+}

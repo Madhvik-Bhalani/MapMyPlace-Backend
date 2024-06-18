@@ -1,6 +1,5 @@
 const nodemailer = require('nodemailer');
 const MailTemplets = require('./MailTemplates.js');
-const { log } = require('console');
 
 function nodeMailer(type, userEmail, header, userName, body) {
     

@@ -40,6 +40,12 @@ const userSchema = new mongoose.Schema({
         },
         unique: [true, "Mobile number must be unique"],
     },
+    favFacility: {
+        type: Object
+    },
+    homeAddress: {
+        type: Object
+    },
     pass: {
         type: String,
         required: [true, "Please fill your password"],
