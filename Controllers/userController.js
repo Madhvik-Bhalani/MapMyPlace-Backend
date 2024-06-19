@@ -19,7 +19,7 @@ exports.signup = async (req, res) => {
 
             const hashedPassword = await bcrypt.hash(req.body.pass, 10);
 
-            await userModel.updateOne({ email: user.email }, { $set: { fname: req.body.fname, lname: req.body.lname, mno: req.body.mno, email: req.body.email, pass: hashedPassword, active: true, token: token } }, { new: true })
+            await userModel.updateOne({ email: user.email }, { $set: { fname: req.body.fname, lname: req.body.lname, mno: req.body.mno, email: req.body.email, pass: hashedPassword, active: true, token: token,homeAddress:{},favFacility:{} } }, { new: true })
             //update data with the email id which account is deleted
 
             res.status(201).json({
@@ -313,8 +313,7 @@ exports.addHomeAddress = async (req, res) => {
     try {
         const user = await userModel.findById(req.user._id); //get from auth.js
         const userId = user._id
-        console.log(user);
-        console.log(req.body.homeAddress);
+       
         if (user !== null) {
             if (req.body.homeAddress) {
 
