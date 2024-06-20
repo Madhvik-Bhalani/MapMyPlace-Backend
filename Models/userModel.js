@@ -28,6 +28,7 @@ const userSchema = new mongoose.Schema({
     mno: {
         type: String,
         trim: true,
+        required: [true, " Please fill your mobile number"],
         validate(val) {
             const mobileNumber = val.toString();
             if (mobileNumber.length !== 11) {
@@ -80,7 +81,7 @@ userSchema.pre("save", async function (next) {
 userSchema.methods.gentoken = async function () {
 
     try {
-        const token = jwt.sign({ _id: this._id }, process.env.TOKEN_SECRET_KEY, {
+        const token = await jwt.sign({ _id: this._id }, process.env.TOKEN_SECRET_KEY, {
             expiresIn: process.env.TOKEN_EXPIRE_IN,
         })
         return token;

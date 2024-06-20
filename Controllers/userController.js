@@ -19,19 +19,19 @@ exports.signup = async (req, res) => {
 
             const hashedPassword = await bcrypt.hash(req.body.pass, 10);
 
-            await userModel.updateOne({ email: user.email }, { $set: { fname: req.body.fname, lname: req.body.lname, mno: req.body.mno, email: req.body.email, pass: hashedPassword, active: true, token: token,homeAddress:{},favFacility:{} } }, { new: true })
+            await userModel.updateOne({ email: user.email }, { $set: { fname: req.body.fname, lname: req.body.lname, mno: req.body.mno, email: req.body.email, pass: hashedPassword, active: true, token: token, homeAddress: {}, favFacility: {} } }, { new: true })
             //update data with the email id which account is deleted
 
             res.status(201).json({
                 status: true,
-                message: "Signup successfully...!",
+                message: "Signup successfully..!",
                 data: token,
             });
         }
         else if (user !== null) {
             return res.status(400).json({
                 status: false,
-                message: "User already exist...!",
+                message: "User already exist..!",
             });
         }
         else {
@@ -47,21 +47,23 @@ exports.signup = async (req, res) => {
 
                 const token = await data.gentoken();
 
-                await userModel.updateOne({ email: req.body.email }, { $set: { token: token } }, { new: true });
-
 
                 await data.save();  // password will be bcrypted using function which is define in userModel
 
+                await userModel.updateOne({ email: req.body.email }, { $set: { token: token } }, { new: true });
+                //first save and then update
+
+
                 res.status(201).json({
                     status: true,
-                    message: "Signup successfully...!",
+                    message: "Signup successfully..!",
                     data: token,
                 });
 
             } else {
                 res.status(400).json({
                     status: false,
-                    message: "Password and confirm password does not match...!",
+                    message: "Password and confirm password does not match..!",
                 });
 
             }
@@ -125,13 +127,13 @@ exports.fetchUser = async (req, res) => {
         } else {
             return res.status(401).json({
                 status: false,
-                message: "Invalid user id",
+                message: "Invalid user id..!",
             });
         }
     } catch (error) {
         res.status(400).json({
             status: false,
-            message: "Something went wrong, Please try again latter...!",
+            message: "Something went wrong, Please try again latter..!",
         });
     }
 };
@@ -156,7 +158,7 @@ exports.editProfile = async (req, res) => {
             });
         }
     } catch (error) {
-        console.log("Error while fetching user:", error);
+        console.log("Error while editing profile:", error);
         res.status(400).json({
             status: false,
             message: "Something went wrong, Please try again latter...!",
@@ -183,7 +185,7 @@ exports.deleteAccount = async (req, res) => {
             });
         }
     } catch (error) {
-        console.log("Error while fetching user:", error);
+        console.log("Error while deleting account:", error);
         res.status(400).json({
             status: false,
             message: "Something went wrong, Please try again latter...!",
@@ -248,7 +250,7 @@ exports.addFavFacility = async (req, res) => {
             });
         }
     } catch (error) {
-        console.log("Error while fetching user:", error);
+        console.log("Error while adding favorite facility:", error);
         res.status(400).json({
             status: false,
             message: "Something went wrong, Please try again latter...!",
@@ -272,7 +274,7 @@ exports.fetchFavFacility = async (req, res) => {
         } else {
             return res.status(401).json({
                 status: false,
-                message: "Invalid user id",
+                message: "Invalid user id..!",
             });
         }
     } catch (error) {
@@ -313,7 +315,7 @@ exports.addHomeAddress = async (req, res) => {
     try {
         const user = await userModel.findById(req.user._id); //get from auth.js
         const userId = user._id
-       
+
         if (user !== null) {
             if (req.body.homeAddress) {
 

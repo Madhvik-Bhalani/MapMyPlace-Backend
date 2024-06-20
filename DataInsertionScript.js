@@ -61,7 +61,7 @@ const updateDatabase = async (model, data) => {
     try {
         console.log("Modification Starts=============");
         for (const item of data) {
-            const { D_ID } = item; // Assuming each item has a unique ID field
+            const { D_ID } = item; 
 
             const existingItem = await model.findOne({ 'data_obj.D_ID': D_ID }); // Check if the item already exists in the database
 

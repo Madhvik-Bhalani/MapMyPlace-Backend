@@ -26,15 +26,15 @@ exports.fetchMapData = async (req, res) => {
                 },
             });
         } else {
-            return res.status(401).json({
+            return res.status(400).json({
                 status: false,
-                message: "Invalid user id",
+                message: "Invalid user id..!!",
             });
         }
     } catch (error) {
         res.status(400).json({
             status: false,
-            message: "Something went wrong, Please try again latter...!",
+            message: "Something went wrong, Please try again latter..!",
         });
     }
 };
