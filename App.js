@@ -1,5 +1,6 @@
 require("dotenv").config()
 require("./Connection/connection.js")
+// require("./DataInsertionScript.js")
 const userRouters = require("./Routes/userRouters.js")
 const passwordRouters = require("./Routes/passwordRouters.js")
 const mapRouters = require("./Routes/mapRouters.js")
