@@ -9,21 +9,26 @@ const app = express()
 const cors = require("cors")
 
 app.use(express.json())
-app.use(express.urlencoded({extended:true}))
-app.use(cors())
+app.use(express.urlencoded({ extended: true }))
+
+const corsOptions = {
+    origin: '*',
+}
+app.use(cors(corsOptions))
+
 
 // Users
-app.use("/api/v1/users",userRouters)
+app.use("/api/v1/users", userRouters)
 
 // Passwords
-app.use("/api/v1/password",passwordRouters)
+app.use("/api/v1/password", passwordRouters)
 
 // Map
-app.use("/api/v1/map",mapRouters)
+app.use("/api/v1/map", mapRouters)
 
 PORT = process.env.PORT || 5000
 
-app.listen(PORT,()=>{
+app.listen(PORT, () => {
     console.log(`Backend Server Start At=>${PORT}`);
 })
 
